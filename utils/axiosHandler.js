@@ -1,5 +1,5 @@
 const axios = require('axios')
-
+//creating an instance of axios
 class AxiosHandler {
     static _axios = axios.create({
         baseUrl: process.env.NEWS_API_URL,
@@ -14,20 +14,12 @@ class AxiosHandler {
             if (res) {
                 return res.data
             }
+
         } catch (error) {
-            this.handleErrors(error);
-            return Promise.reject(error);
+            return Promise.reject(error.response.data);
         }
     }
 
-    handleErrors(error) {
-        if (error.response) {
-            const errorMessage = error.response.data.message
-            return errorMessage ? errorMessage : 'Something went wrong'
-        }
-
-        return 'something not working'
-    }
 }
 
 module.exports = new AxiosHandler()
